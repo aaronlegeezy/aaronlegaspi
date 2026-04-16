@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sara Lawrence</title>
+<style>
+  @font-face {
+    font-family: 'ABC Oracle';
+    src: url('/Users/aaronlegaspi/Desktop/Voodoo 0.1/fonts/ABCOracleCyrillic-Regular-Trial.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'ABC Oracle';
+    src: url('/Users/aaronlegaspi/Desktop/Voodoo 0.1/fonts/ABCOracleCyrillic-Medium-Trial.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+</style>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --date-col: 130px;
+    --frame-pad-v: 82px;
+    --frame-pad-h: 62px;
+  }
+
+  body {
+    background: #fff;
+    font-family: 'ABC Oracle', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Frame ── */
+  #app-frame {
+    width: 100%;
+    max-width: 730px;
+    margin: 0 auto;
+    padding: var(--frame-pad-v) var(--frame-pad-h);
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    align-items: stretch;
+  }
+
+  /* ── Header ── */
+  .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .header-avatar {
+    width: 92px;
+    height: 93px;
+    border-radius: 100px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .header-name {
+    font-size: 20px;
+    font-weight: 400;
+    color: #111;
+    line-height: 26px;
+  }
+
+  .header-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 22px;
+  }
+
+  /* ── Main & Footer ── */
+  .main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 58px;
+  }
+
+  .footer {
+    width: 100%;
+  }
+
+  /* ── Section ── */
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .section-heading {
+    font-size: 14px;
+    font-weight: 400;
+    color: #111;
+    line-height: 19.6px;
+  }
+
+  /* ── Row ── */
+  .row {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .row-date {
+    width: var(--date-col);
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 300;
+    color: #6d6d6d;
+    line-height: 25.2px;
+  }
+
+  .row-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row-title {
+    font-size: 14px;
+    font-weight: 300;
+    color: #111;
+    line-height: 25.2px;
+  }
+
+  .row-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    text-decoration: none;
+    color: #111;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 25.2px;
+  }
+  .row-link:hover { text-decoration: underline; }
+
+  .row-link-arrow {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    opacity: 0.5;
+    margin-top: 1px;
+  }
+
+  .row-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 25.2px;
+  }
+
+  /* ── About ── */
+  .about-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 25.2px;
+    width: 100%;
+  }
+
+  /* ── Image strip ── */
+  .image-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: var(--date-col);
+  }
+
+  .strip-img {
+    width: 150px;
+    height: 90px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Link block (desktop: horizontal) ── */
+  .link-block-row {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .link-block-spacer {
+    width: var(--date-col);
+    flex-shrink: 0;
+  }
+
+  .link-block-card {
+    width: 100%;
+    height: 90px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .link-block-card:hover { border-color: #ccc; }
+
+  .link-block-thumb {
+    width: 152px;
+    height: 90px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-right: 1px solid #f2f2f2;
+  }
+
+  .link-block-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 16px;
+    gap: 2px;
+  }
+
+  .link-block-title {
+    font-size: 14px;
+    font-weight: 300;
+    color: #111;
+    line-height: 25.2px;
+  }
+
+  .link-block-meta {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6d6d6d;
+    line-height: 25.2px;
+  }
+
+  /* ── Review via ── */
+  .review-via {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6d6d6d;
+    line-height: 25.2px;
+  }
+
+  .review-via a {
+    color: #6d6d6d;
+    text-decoration: none;
+  }
+  .review-via a:hover { color: #111; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── Video cards ── */
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #f0f0f0;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  .video-meta-name {
+    font-size: 14px;
+    font-weight: 300;
+    color: #111;
+    line-height: 25.2px;
+  }
+
+  .video-meta-name a {
+    color: #111;
+    text-decoration: none;
+  }
+  .video-meta-name a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .video-meta-title {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6d6d6d;
+    line-height: 25.2px;
+  }
+
+  /* ── Video tile ── */
+  .video-tile {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: #f0f0f0;
+    flex-shrink: 0;
+  }
+
+  .video-tile video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-tile .play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+
+  .video-tile .play-icon svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.55;
+  }
+
+  .video-tile .play-icon {
+    opacity: 1;
+    transition: opacity 0.15s;
+  }
+
+  .video-tile.playing .play-icon {
+    opacity: 0;
+  }
+
+  /* ── Sub-roles (Shopify group) ── */
+  .subrole-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    padding-left: 0;
+  }
+
+  .subrole-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 12px;
+    border-left: 1px solid #e5e5e5;
+  }
+
+  .subrole-title {
+    font-size: 14px;
+    font-weight: 300;
+    color: #111;
+    line-height: 25.2px;
+  }
+
+  .subrole-meta {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6d6d6d;
+    line-height: 22px;
+  }
+
+  /* ── Work entry city + description ── */
+  .row-city {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 22.4px;
+  }
+
+  .row-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 22.4px;
+    margin-top: 8px;
+  }
+
+  /* ── Contact list ── */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+  }
+
+  /* ════════════════════════════════
+     Tablet — ≤ 600px
+  ════════════════════════════════ */
+  @media (max-width: 600px) {
+    :root {
+      --date-col: 90px;
+      --frame-pad-v: 48px;
+      --frame-pad-h: 48px;
+    }
+
+    .row-link-arrow { display: none; }
+
+    /* Stack date above content */
+    .row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .row-date {
+      width: auto;
+      line-height: 22.4px;
+    }
+
+    .row-content {
+      width: 100%;
+    }
+
+    .link-block-card {
+      height: auto;
+      flex-direction: column;
+    }
+
+    .link-block-thumb {
+      width: 100%;
+      height: 90px;
+      border-right: none;
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .link-block-text { padding: 10px 16px; }
+  }
+
+  /* ════════════════════════════════
+     Mobile — ≤ 420px
+  ════════════════════════════════ */
+  @media (max-width: 420px) {
+    :root {
+      --date-col: 72px;
+      --frame-pad-v: 40px;
+      --frame-pad-h: 36px;
+    }
+
+    .header-avatar { width: 64px; height: 64px; }
+    .header-name { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app-frame">
+
+  <!-- Header -->
+  <header class="header">
+    <img class="header-avatar" src="https://www.figma.com/api/mcp/asset/fd834425-98ab-4512-8848-50992343a7a7" alt="Aaron Legaspi">
+    <div class="header-text">
+      <div class="header-name">Aaron Legaspi</div>
+      <div class="header-subtitle">Staff Product Designer</div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- About -->
+    <section class="section" style="gap: 4px;">
+      <div class="section-heading">About</div>
+      <p class="about-text">An incredibly strong company changer, fast, decisive, bullish, but incredibly kind, calm, friendly, and chill as hell. Took a short break for side projects and looking for the right product company to make massive leaps with. Yes, I'm proficient with AI. Glad to intro.</p>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="section">
+      <div class="section-heading">Work Experience</div>
+
+      <!-- Boulevard -->
+      <div class="row">
+        <div class="row-date">2023 — 2025</div>
+        <div class="row-content">
+          <span class="row-title">Staff Product Designer at Boulevard</span>
+          <div class="row-city">Remote</div>
+        </div>
+      </div>
+
+      <!-- LiquiFi -->
+      <div class="row">
+        <div class="row-date">2022 — 2023</div>
+        <div class="row-content">
+          <span class="row-title">Founding Product Designer at LiquiFi (Acq by Coinbase)</span>
+          <div class="row-city">Remote</div>
+        </div>
+      </div>
+
+      <!-- Shopify -->
+      <div class="row">
+        <div class="row-date">2020 — 2022</div>
+        <div class="row-content">
+          <span class="row-title">Staff Product Designer at Shopify</span>
+          <div class="row-city">Toronto, ON</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2018 — 2019</div>
+        <div class="row-content">
+          <span class="row-title">Senior Product Designer at Shopify</span>
+          <div class="row-city">Toronto, ON</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2015 — 2017</div>
+        <div class="row-content">
+          <span class="row-title">Product Designer at Shopify</span>
+          <div class="row-city">Ottawa, ON</div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- Performance Reviews -->
+    <section class="section">
+      <div class="section-heading">Performance reviews</div>
+
+      <div class="row">
+        <div class="row-date">2025</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/daniel-ragno-65722625/" target="_blank">Daniel Ragno</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2024</div>
+        <div class="row-content">
+          <span class="row-title">Exponential</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/andrey-gargul/" target="_blank">Andrey Gargul</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2023</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/andrey-gargul/" target="_blank">Andrey Gargul</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2022</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/robindji/" target="_blank">Robin Ji</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2021</div>
+        <div class="row-content">
+          <span class="row-title">Exponential</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/sadialatifi/" target="_blank">Sadia Latifi</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2020</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/elizabethmcguane/" target="_blank">Elizabeth McGuane</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2019</div>
+        <div class="row-content">
+          <span class="row-title">Exponential</span>
+          <div class="row-sub">Promoted Aaron to Staff Product Designer</div>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/elizabethmcguane/" target="_blank">Elizabeth McGuane</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2018</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/jenchowca/" target="_blank">Jen Chow</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2017</div>
+        <div class="row-content">
+          <span class="row-title">Exponential</span>
+          <div class="row-sub">Promoted Aaron to Senior Product Designer</div>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/ilialarionov/" target="_blank">Ilia Larianov</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2016</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/ilialarionov/" target="_blank">Ilia Larianov</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">2015</div>
+        <div class="row-content">
+          <span class="row-title">Positive</span>
+          <div class="review-via">Review via <a href="https://www.linkedin.com/in/rachelmrobertson/" target="_blank">Rachel Robertson</a></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Teammates -->
+    <section class="section">
+      <div class="section-heading">What teammates say</div>
+      <div class="video-list">
+
+        <div class="video-card">
+          <div class="video-tile" onclick="toggleVideo(this)">
+            <video src="Aaron - 5 stars (2).mov" preload="metadata" playsinline></video>
+            <div class="play-icon">
+              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="video-meta-name"><a href="https://www.linkedin.com/in/andrey-gargul/" target="_blank">Andrey Gargul</a></div>
+            <div class="video-meta-title">Head of Design @ Boulevard, Ex-Shopify</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-tile" onclick="toggleVideo(this)">
+            <video src="jonathan_compressed.mp4" preload="metadata" playsinline></video>
+            <div class="play-icon">
+              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="video-meta-name"><a href="https://www.linkedin.com/in/jonzhao/" target="_blank">Jonathan Zhao</a></div>
+            <div class="video-meta-title">Principal Product Manager @ Instacart, Ex-Shopify</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-tile" onclick="toggleVideo(this)">
+            <video src="A-dawg 2.mov" preload="metadata" playsinline></video>
+            <div class="play-icon">
+              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="video-meta-name"><a href="https://www.linkedin.com/in/kevin-elberger/" target="_blank">Kevin Elberger</a></div>
+            <div class="video-meta-title">Frontend Engineer II @ Boulevard</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /main -->
+
+  <!-- Footer / Contact -->
+  <footer class="footer">
+    <div class="section-heading">Contact</div>
+    <div class="contact-list">
+
+      <div class="row">
+        <div class="row-date">Email</div>
+        <div class="row-content">
+          <a class="row-link" href="mailto:aaron.ap.legaspi@gmail.com">aaron.ap.legaspi@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-date">LinkedIn</div>
+        <div class="row-content">
+          <a class="row-link" href="https://www.linkedin.com/in/aaron-legaspi-80545543/" target="_blank">aaronlegaspi <img class="row-link-arrow" src="https://www.figma.com/api/mcp/asset/31c08ebd-57dc-4fa6-879e-0c9ce06d0acc" alt=""></a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</div><!-- /app-frame -->
+
+<script>
+  function toggleVideo(tile) {
+    const video = tile.querySelector('video');
+    if (video.paused) {
+      // Pause any other playing videos first
+      document.querySelectorAll('.video-tile.playing').forEach(function(t) {
+        t.querySelector('video').pause();
+        t.classList.remove('playing');
+      });
+      video.muted = false;
+      video.play();
+      tile.classList.add('playing');
+    } else {
+      video.pause();
+      tile.classList.remove('playing');
+    }
+  }
+
+  // Show play icon again when video ends
+  document.querySelectorAll('.video-tile video').forEach(function(video) {
+    video.addEventListener('ended', function() {
+      video.closest('.video-tile').classList.remove('playing');
+    });
+  });
+</script>
+</body>
+</html>

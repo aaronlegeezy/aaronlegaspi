@@ -699,6 +699,13 @@
 </div><!-- /app-frame -->
 
 <script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
+  });
+
   function toggleVideo(tile) {
     const video = tile.querySelector('video');
     if (video.paused) {

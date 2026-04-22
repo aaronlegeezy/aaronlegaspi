@@ -341,7 +341,6 @@
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
     background: #ebebeb;
     flex-shrink: 0;
   }
@@ -384,31 +383,6 @@
     pointer-events: none;
   }
 
-  .video-tile .play-icon {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    transition: opacity 0.15s;
-    z-index: 2;
-  }
-
-  .video-tile .play-icon svg {
-    width: 48px;
-    height: 48px;
-    opacity: 0.55;
-  }
-
-  .video-tile .play-icon {
-    opacity: 1;
-    transition: opacity 0.15s;
-  }
-
-  .video-tile.playing .play-icon {
-    opacity: 0;
-  }
 
   /* ── Recent Projects ── */
   .project-card {
@@ -679,7 +653,7 @@
       <div class="project-card">
         <div class="project-thumb">
           <div class="project-thumb-screen">
-            <video src="sms-marketing.mp4" autoplay muted loop playsinline></video>
+            <video src="sms-marketing.mp4" autoplay muted loop playsinline webkit-playsinline></video>
           </div>
         </div>
         <div class="project-meta">
@@ -695,7 +669,7 @@
       <div class="project-card">
         <div class="project-thumb">
           <div class="project-thumb-screen">
-            <video src="filters-audiences.mp4" autoplay muted loop playsinline></video>
+            <video src="filters-audiences.mp4" autoplay muted loop playsinline webkit-playsinline></video>
           </div>
         </div>
         <div class="project-meta">
@@ -711,7 +685,7 @@
       <div class="project-card">
         <div class="project-thumb">
           <div class="project-thumb-screen">
-            <video src="app-store-ads.mp4" autoplay muted loop playsinline></video>
+            <video src="app-store-ads.mp4" autoplay muted loop playsinline webkit-playsinline></video>
           </div>
         </div>
         <div class="project-meta">
@@ -790,11 +764,8 @@
       <div class="video-list">
 
         <div class="video-card">
-          <div class="video-tile" onclick="toggleVideo(this)">
-            <video src="andrey.mp4" poster="thumb-andrey.jpg" preload="metadata" playsinline></video>
-            <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
-            </div>
+          <div class="video-tile">
+            <video src="andrey.mp4" poster="thumb-andrey.jpg" preload="metadata" playsinline controls></video>
           </div>
           <div>
             <div class="video-meta-name"><a href="https://www.linkedin.com/in/andrey-gargul/" target="_blank">Andrey Gargul</a></div>
@@ -803,11 +774,8 @@
         </div>
 
         <div class="video-card">
-          <div class="video-tile" onclick="toggleVideo(this)">
-            <video src="jonathan.mp4" poster="thumb-jonathan.jpg" preload="metadata" playsinline></video>
-            <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
-            </div>
+          <div class="video-tile">
+            <video src="jonathan.mp4" poster="thumb-jonathan.jpg" preload="metadata" playsinline controls></video>
           </div>
           <div>
             <div class="video-meta-name"><a href="https://www.linkedin.com/in/jonzhao/" target="_blank">Jonathan Zhao</a></div>
@@ -816,11 +784,8 @@
         </div>
 
         <div class="video-card">
-          <div class="video-tile" onclick="toggleVideo(this)">
-            <video src="kevin.mp4" poster="thumb-kevin.jpg" preload="metadata" playsinline></video>
-            <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
-            </div>
+          <div class="video-tile">
+            <video src="kevin.mp4" poster="thumb-kevin.jpg" preload="metadata" playsinline controls></video>
           </div>
           <div>
             <div class="video-meta-name"><a href="https://www.linkedin.com/in/kevin-elberger/" target="_blank">Kevin Elberger</a></div>
@@ -961,24 +926,7 @@
     window.scrollTo(0, 0);
   });
 
-  function toggleVideo(tile) {
-    const video = tile.querySelector('video');
-    if (video.paused) {
-      // Pause any other playing videos first
-      document.querySelectorAll('.video-tile.playing').forEach(function(t) {
-        t.querySelector('video').pause();
-        t.classList.remove('playing');
-      });
-      video.muted = false;
-      video.play();
-      tile.classList.add('playing');
-    } else {
-      video.pause();
-      tile.classList.remove('playing');
-    }
-  }
-
-  // Project video skeleton loading
+  // Project video skeleton + autoplay
   document.querySelectorAll('.project-thumb-screen video').forEach(function(video) {
     function markLoaded() {
       video.closest('.project-thumb-screen').classList.add('loaded');
@@ -988,15 +936,12 @@
     } else {
       video.addEventListener('loadedmetadata', markLoaded, { once: true });
     }
+    // Force play on mobile where autoplay may be deferred
+    video.play().catch(function() {});
   });
 
-  // Show play icon again when video ends
+  // Teammate video skeleton loading
   document.querySelectorAll('.video-tile video').forEach(function(video) {
-    video.addEventListener('ended', function() {
-      video.closest('.video-tile').classList.remove('playing');
-    });
-
-    // Remove skeleton once video metadata (and poster) is ready
     function markLoaded() {
       video.closest('.video-tile').classList.add('loaded');
     }

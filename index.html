@@ -395,10 +395,22 @@
     transition: opacity 0.15s;
   }
 
-  .video-tile .play-icon svg {
-    width: 48px;
-    height: 48px;
-    opacity: 0.55;
+  .video-tile .play-icon .play-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.52);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-tile .play-icon .play-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
   }
 
   .video-tile.playing .play-icon {
@@ -789,7 +801,9 @@
           <div class="video-tile" onclick="toggleVideo(this)">
             <video src="andrey.mp4" poster="thumb-andrey.jpg" preload="metadata" playsinline></video>
             <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+              <div class="play-btn">
+                <svg viewBox="0 0 12 14" fill="white" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 12,7 0,14"/></svg>
+              </div>
             </div>
           </div>
           <div>
@@ -803,7 +817,9 @@
           <div class="video-tile" onclick="toggleVideo(this)">
             <video src="jonathan.mp4" poster="thumb-jonathan.jpg" preload="metadata" playsinline></video>
             <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+              <div class="play-btn">
+                <svg viewBox="0 0 12 14" fill="white" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 12,7 0,14"/></svg>
+              </div>
             </div>
           </div>
           <div>
@@ -817,7 +833,9 @@
           <div class="video-tile" onclick="toggleVideo(this)">
             <video src="kevin.mp4" poster="thumb-kevin.jpg" preload="metadata" playsinline></video>
             <div class="play-icon">
-              <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.35)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg>
+              <div class="play-btn">
+                <svg viewBox="0 0 12 14" fill="white" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 12,7 0,14"/></svg>
+              </div>
             </div>
           </div>
           <div>
